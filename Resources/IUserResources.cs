@@ -1,4 +1,5 @@
-﻿using MyShop;
+﻿//using MyShop;
+using Entities;
 
 namespace Resources
 {
@@ -7,8 +8,8 @@ namespace Resources
         void Delete(int id);
         IEnumerable<string> Get();
         string Get(int id);
-        User Post(User user);
-        User PostLogIn(string userName, string password);
-        void Put(int id, User userInfo);
+        Task<User> Post(User user);
+        Task<User> PostLogIn(string userName, string password);
+        Task Put(int id, User userInfo);
     }
 }

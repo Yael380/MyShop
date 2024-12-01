@@ -1,4 +1,5 @@
-﻿using MyShop;
+﻿//using MyShop;
+using Entities;
 
 namespace Services
 {
@@ -7,8 +8,8 @@ namespace Services
         void Delete(int id);
         IEnumerable<string> Get();
         string Get(int id);
-        User Post(User user);
-        User PostLogIn(string userName, string password);
+        Task<User> Post(User user);
+        Task<User> PostLogIn(string userName, string password);
         void Put(int id, User userInfo);
         int CheckPassword(string password);
 

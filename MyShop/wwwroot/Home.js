@@ -11,8 +11,8 @@ const getDataFromFormSignIn = () => {
     const lastName = document.getElementById("lastName").value;
     if (userName.indexOf('@') == -1)
         alert("Field email must include @")
-    else if (passwordScore <= 3) 
-        alert("weak password ")
+    else if (passwordScore < 3) 
+        alert("weak passwordl")
     else if (firstName.length < 2 || firstName.length > 20 || lastName.length < 2 || lastName.length > 20)
         alert("Name can be between 2 till 20 letters")
     else if (!userName || !password || !firstName || !lastName)

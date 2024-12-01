@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Services;
+using Entities;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MyShop.Controllers
@@ -15,7 +16,6 @@ namespace MyShop.Controllers
         {
             UserServices = userServices;
         }
-        string filePath = "M:\\Web Api\\MyShop\\MyShop\\TextFile.txt";
         // GET: api/<UsersController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -32,17 +32,17 @@ namespace MyShop.Controllers
 
         // POST api/<UsersController>
         [HttpPost]
-        public ActionResult Post([FromBody] User user)
+        public async Task<ActionResult> Post([FromBody] User user)
         {
-            User newUser= UserServices.Post(user);
+            User newUser =await UserServices.Post(user);
             return CreatedAtAction(nameof(Get), new { id = newUser.Id }, newUser);
         }
         // POST api/<UsersController>
         [HttpPost]
         [Route("login")]
-        public ActionResult PostLogIn([FromQuery] string userName,string password)
+        public async Task<ActionResult> PostLogIn([FromQuery] string userName,string password)
         {
-            User newUser = UserServices.PostLogIn(userName, password);
+            User newUser = await UserServices.PostLogIn(userName, password);
             if(newUser!=null)
                 return Ok(newUser);
             else
