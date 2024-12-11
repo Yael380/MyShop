@@ -22,16 +22,17 @@ namespace Resources
         }
         public async Task<User> Post(User user)
         {
-            await context.Users.AddAsync(user);
+            var res= await context.Users.AddAsync(user);
             await context.SaveChangesAsync();
-            return user;
+            return res;// - the created user with the id
+           // return user;
         }
         public async Task<User> PostLogIn(string userName, string password)
         {
             User userFind = await context.Users.FirstOrDefaultAsync(user => user.UserName == userName && user.Password == password);
             return userFind;
         }
-        public async Task Put(int id, User userInfo)
+        public async Task Put(int id, User userInfo)//return user
         {
             context.Users.Update(userInfo);
             await context.SaveChangesAsync();
