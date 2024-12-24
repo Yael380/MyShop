@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Entities;
 using Microsoft.EntityFrameworkCore;
-namespace Resources 
+namespace Resources
 {
     public class UserResources : IUserResources
     {
@@ -12,33 +12,28 @@ namespace Resources
         {
             context = apiManageContext;
         }
-        public IEnumerable<string> Get()
+        public async Task<User> Get(int id)
         {
-            return new string[] { "value1", "value2" };
-        }
-        public string Get(int id)
-        {
-            return "value";
+            return await context.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
         public async Task<User> Post(User user)
         {
-            await context.Users.AddAsync(user);
+            var res = await context.Users.AddAsync(user);
             await context.SaveChangesAsync();
             return user;
+            //return res;
         }
         public async Task<User> PostLogIn(string userName, string password)
         {
             User userFind = await context.Users.FirstOrDefaultAsync(user => user.UserName == userName && user.Password == password);
             return userFind;
         }
-        public async Task Put(int id, User userInfo)
+        public async Task<User> Put(int id, User userInfo)
         {
+            userInfo.Id = id;
             context.Users.Update(userInfo);
             await context.SaveChangesAsync();
-            return;
-        }
-        public void Delete(int id)
-        {
+            return userInfo;
         }
     }
 }

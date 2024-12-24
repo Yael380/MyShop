@@ -14,4 +14,6 @@ public partial class User
     public string? FirstName { get; set; }
 
     public string? LastName { get; set; }
+
+    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }

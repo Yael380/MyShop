@@ -15,11 +15,7 @@ namespace Services
         {
             this.UserResources = userResources;
         }
-        public IEnumerable<string> Get()
-        {
-            return UserResources.Get();
-        }
-        public string Get(int id)
+        public Task<User> Get(int id)
         {
             return UserResources.Get(id);
         }
@@ -34,14 +30,13 @@ namespace Services
         {
             return UserResources.PostLogIn(userName, password);
         }
-        public void Put(int id, User userInfo)
+        public Task<User> Put(int id, User userInfo)
         {
             int passwordScore = CheckPassword(userInfo.Password);
             if (passwordScore > 3)
-                UserResources.Put(id, userInfo);
-        }
-        public void Delete(int id)
-        {
+                return UserResources.Put(id, userInfo);
+            else 
+                return null;
         }
         public int CheckPassword(string password)
         {
