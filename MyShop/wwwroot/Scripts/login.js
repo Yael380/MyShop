@@ -12,7 +12,7 @@ const getDataFromFormSignIn = () => {
     if (userName.indexOf('@') == -1)
         alert("Field email must include @")
     else if (passwordScore < 3) 
-        alert("weak passwordl")
+        alert("weak password")
     else if (firstName.length < 2 || firstName.length > 20 || lastName.length < 2 || lastName.length > 20)
         alert("Name can be between 2 till 20 letters")
     else if (!userName || !password || !firstName || !lastName)
@@ -84,22 +84,22 @@ const logIn = async () => {
 }
 const checkPassword = async () => {
     try {
-        const postData = document.getElementById("password").value;
+        const password = document.getElementById("password").value;
         const score = document.getElementById("score");
-        if (postData) {
-            const responsePost = await fetch(`api/Users/check?password=${postData}`, {
-                method: 'POST',
+        if (password) {
+            const responseGet = await fetch(`api/Users/check?password=${password}`, {
+                method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
-                query: { password: postData.password }
+                query: { password: password }
             });
-            if (!responsePost.ok) {
+            if (!responseGet.ok) {
                 throw new Error(`http error ${responsePost.status}`)
             }
             else { 
-            const dataPost = await responsePost.json();
-            console.log('POST Data:', dataPost);
-            score.value = dataPost;
-            passwordScore = dataPost;
+                const dataGet = await responseGet.json();
+                console.log('GET Data:', dataGet);
+                score.value = dataGet;
+                passwordScore = dataGet;
             }
         }
     }

@@ -10,11 +10,11 @@ namespace MyShop
         {
             CreateMap<Category, GetCategoryDTO>();
             CreateMap<Order, GetOrderDTO>();
-            CreateMap<Order, PostOrderDTO>();
+            CreateMap<PostOrderDTO, Order>();
             CreateMap<Product, GetProductDTO>();
             //CreateMap<Product, GetProductIdDTO>();
             CreateMap<User, GetUserDTO>();
-            CreateMap<OrderItem, GetOrderItemDTO>();
+            CreateMap<OrderItem, GetOrderItemDTO>().ReverseMap();
         }
     }
 }

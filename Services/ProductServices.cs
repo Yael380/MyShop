@@ -15,9 +15,9 @@ namespace Services
         {
             this.productRepository = _productRepository;
         }
-        public Task<IEnumerable<Product>> Get()
+        public Task<List<Product>> Get(int? minPrice, int? maxPrice, int?[] categoryIds, string? desc)
         {
-            return productRepository.Get();
+            return productRepository.Get(minPrice, maxPrice, categoryIds, desc);
         }
         public Task<Product> Get(int id)
         {

@@ -5,8 +5,7 @@ namespace Services
 {
     public interface IProductServices
     {
-        Task<IEnumerable<Product>> Get();
         Task<Product> Get(int id);
-
+        Task<List<Product>> Get(int? minPrice, int? maxPrice, int?[] categoryIds, string? desc);
     }
 }
