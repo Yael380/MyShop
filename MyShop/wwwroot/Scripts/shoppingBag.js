@@ -8,10 +8,10 @@ const GetCart = ()=> {
     return cart;
 }
 const LoadCart = () => { 
-    const products = GetCart();
+    const products = GetCart();//divide to 2 funcs- add drawOne func 
     let tmp = document.getElementById("temp-row");
     document.querySelector("tbody").innerText=''
-    products.forEach(product => {
+    products.forEach(product => {//map is nicer
         let cloneProduct = tmp.content.cloneNode(true);
         cloneProduct.querySelector('.image').style.backgroundImage = `url(Images/${product.image})`
         cloneProduct.querySelector(".itemName").innerText = product.name;
