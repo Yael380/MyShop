@@ -6,7 +6,7 @@ const OnLoad = () => {
 }
 
 const GetProducts = async () => {
-    let url = "api/Products/";
+    let url = "api/Products/";//build url in a different func
     const { nameSearch, minPrice, maxPrice } = getElementToFilter();
     if (nameSearch || minPrice || maxPrice || categoryIds.length > 0)
         url +='?';
@@ -16,7 +16,7 @@ const GetProducts = async () => {
         url += `&minPrice=${minPrice}`;
     if (maxPrice)
         url += `&maxPrice=${maxPrice}`;
-    for (let i = 0; i < categoryIds.length; i++)
+    for (let i = 0; i < categoryIds.length; i++)//map is nicer
         url += `&categoryIds=${categoryIds[i]}`;
     try {
         const responseGet = await fetch( url, {
@@ -37,7 +37,7 @@ const GetProducts = async () => {
 }
 
 const LoadProducts = async () => {
-    const products = await GetProducts();
+    const products = await GetProducts();//divide to 2 funcs
     let tmp = document.getElementById("temp-card");
     document.getElementById("PoductList").innerHTML = '';
     products.forEach(product => {
@@ -71,7 +71,7 @@ const GetCategories = async () => {
 
 }
 const LoadCategories = async () => {
-    const categories = await GetCategories();
+    const categories = await GetCategories();//divide to 2 funcs
     let tmp = document.getElementById("temp-category");
     categories.forEach(category => {
         let cloneCategory = tmp.content.cloneNode(true);
