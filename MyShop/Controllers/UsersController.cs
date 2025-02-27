@@ -12,13 +12,16 @@ namespace MyShop.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
-    {
+    { 
         IUserServices UserServices;
         IMapper mapper;
-        public UsersController(IUserServices userServices, IMapper mapper)
+        private readonly ILogger <UsersController> logger;
+
+        public UsersController(IUserServices userServices, IMapper mapper, ILogger<UsersController> logger)
         {
             UserServices = userServices;
             this.mapper = mapper;
+            this.logger = logger;
         }
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
@@ -47,8 +50,10 @@ namespace MyShop.Controllers
         {
             User newUser = await UserServices.PostLogIn(userName, password);
             GetUserDTO userDTO = mapper.Map<User, GetUserDTO>(newUser);
-            if (userDTO != null)
+            logger.LogInformation($"Login attempted withUser Name {userName} and password {password}");
+            if (userDTO != null) {
                 return Ok(userDTO);
+            }
             else
                 return NoContent();
         }
@@ -57,6 +62,7 @@ namespace MyShop.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<User>> Put(int id, [FromBody] User userInfo)
         {
+
             User user =await UserServices.Put(id, userInfo);
             GetUserDTO userDTO = mapper.Map<User, GetUserDTO>(user);
             if (userDTO != null)
