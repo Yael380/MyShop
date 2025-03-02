@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Microsoft.Extensions.Logging;
 using Resources;
 using System;
 using System.Collections.Generic;
@@ -11,19 +12,36 @@ namespace Services
     public class OrderService : IOrderService
     {
         IOrderRepository orderRepository;
+        IProductRepository productRepository;
+        private readonly ILogger<OrderRepository> logger;
 
-        public OrderService(IOrderRepository _orderRepository)
+        public OrderService(IOrderRepository _orderRepository, IProductRepository _productRepository, ILogger<OrderRepository> logger)
         {
             this.orderRepository = _orderRepository;
+            this.productRepository = _productRepository;
+            this.logger = logger;
         }
 
         public Task<Order> Get(int id)
         {
             return orderRepository.Get(id);
         }
-        public Task<Order> Post(Order newOrder)
+        public async  Task<Order> Post(Order newOrder)
         {
-            return orderRepository.Post(newOrder);
+            List<Product> products = await productRepository.Get(null,null,new int?[0],null);
+            double ? sum = 0;
+            foreach (var item in newOrder.OrderItems)
+            {
+                Product? p = products.FirstOrDefault(p => p.Id == item.ProductId);
+                sum += p?.Price * item.Quantity;
+            }
+            if (newOrder.Sum != sum)
+            {
+                newOrder.Sum = sum;
+                logger.LogCritical($"User id {newOrder.UserId} is trying to hack your order amount ");
+            }
+          
+            return await orderRepository.Post(newOrder);
         }
     }
 }

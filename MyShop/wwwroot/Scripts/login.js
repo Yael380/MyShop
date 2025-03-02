@@ -85,7 +85,6 @@ const logIn = async () => {
 const checkPassword = async () => {
     try {
         const password = document.getElementById("password").value;
-        const score = document.getElementById("score");
         if (password) {
             const responseGet = await fetch(`api/Users/check?password=${password}`, {
                 method: 'GET',
@@ -98,7 +97,8 @@ const checkPassword = async () => {
             else { 
                 const dataGet = await responseGet.json();
                 console.log('GET Data:', dataGet);
-                score.value = dataGet;
+                const score = document.getElementById("score").value=dataGet;
+                console.log(score);
                 passwordScore = dataGet;
             }
         }

@@ -51,6 +51,7 @@ const LoadProducts = async () => {
     })
     const cart = GetCart();
     document.querySelector("#ItemsCountText").innerHTML = cart.length;
+    document.querySelector("#counter").innerHTML =products.length ;
 }
 const GetCategories = async () => {
     try {
@@ -72,6 +73,7 @@ const GetCategories = async () => {
 }
 const LoadCategories = async () => {
     const categories = await GetCategories();
+    console.log(categories);
     let tmp = document.getElementById("temp-category");
     categories.forEach(category => {
         let cloneCategory = tmp.content.cloneNode(true);

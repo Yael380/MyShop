@@ -59,7 +59,7 @@ const placeOrder = async () => {
             }
             const dataPost = await responsePost.json();
             console.log('POST Data:', dataPost);
-            alert("Your order is sucssesfully")
+            alert(`Your order ${dataPost.id} is sucssesfully`)
         }
     }
     catch (err) {
@@ -67,20 +67,25 @@ const placeOrder = async () => {
     }
     sessionStorage.removeItem('cart');
     LoadCart();
+    document.location.href = "/home.html";
 }
 const getDataOrder = () => {
     const userId = sessionStorage.getItem('currenUserId')
     console.log(userId)
     const cart = GetCart();
     let orderItems = [];
+    let sum = 0;
     for (let i = 0; i < cart.length; i++) {
+        sum += cart[i].price;
+        console.log();
         const orderItem = orderItems?.find(oi => oi.productId == cart[i].id);
-        if (orderItem)
+        if (orderItem) 
             orderItem.quantity++;
         else
             orderItems.push({ productId: cart[i].id, quantity :1});
     }
-    return { UserId:userId, OrderItems: orderItems }
+    //sum = 40;
+    return { UserId:userId, OrderItems: orderItems,Sum:sum }
 }
 //<tr class="item-row">
 //    <td class="imageColumn"><a rel="lightbox" href="#"><div class="image"></div></a></td>

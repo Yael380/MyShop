@@ -37,11 +37,12 @@ namespace MyShop.Controllers
 
         // POST api/<UsersController>
         [HttpPost]
-        public async Task<ActionResult<User>> Post([FromBody] User user)
+        public async Task<ActionResult<User>> Post([FromBody] PostUserDTO user)
         {
-            User newUser =await UserServices.Post(user);
-            GetUserDTO userDTO = mapper.Map<User, GetUserDTO>(newUser);
-            return CreatedAtAction(nameof(Get), new { id = userDTO.Id }, userDTO);
+            User userDTO = mapper.Map<PostUserDTO,User>(user);
+            User newUser =await UserServices.Post(userDTO);
+            GetUserDTO getUserDTO = mapper.Map<User, GetUserDTO>(newUser);
+            return CreatedAtAction(nameof(Get), new { id = getUserDTO.Id }, getUserDTO);
         }
         // POST api/<UsersController>
         [HttpPost]
