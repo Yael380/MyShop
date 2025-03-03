@@ -9,8 +9,8 @@ const getDataFromFormSignIn = () => {
     const password = document.getElementById("password").value;
     const firstName = document.getElementById("firstName").value;
     const lastName = document.getElementById("lastName").value;
-    if (userName.indexOf('@') == -1)
-        alert("Field email must include @")
+    if (userName.indexOf('@') == -1 || userName.indexOf('@') == userName.length-1)
+        alert("email is worng")
     else if (passwordScore < 3) 
         alert("weak password")
     else if (firstName.length < 2 || firstName.length > 20 || lastName.length < 2 || lastName.length > 20)
@@ -37,7 +37,7 @@ const signIn = async () => {
         }
             const dataPost = await responsePost.json();
             console.log('POST Data:', dataPost);
-                alert("SignIn succeessfully")
+            alert("SignIn succeessfully")
         }
     }
     catch (err) {
@@ -67,19 +67,19 @@ const logIn = async () => {
             });
             if (!responsePost.ok)
                 throw new Error(`http error ${responsePost.status}`)
-            if (responsePost.status == 204)
+            if (responsePost.status === 204)
                 alert("User not found")
             else {
                 const dataPost = await responsePost.json();
                 console.log('POST Data:', dataPost);
                 alert(`hi ${dataPost.firstName}`)
                 sessionStorage.setItem("currenUserId", dataPost.id)
-                window.location.href="UpdateUser.html"
+                window.location.href = "Home.html"
             }
         }
     }
     catch (err) {
-        
+        console.log(err)
     }  
 }
 const checkPassword = async () => {
@@ -106,5 +106,65 @@ const checkPassword = async () => {
     catch (err) {
         alert(err)
     }
+}
+
+const update = async () => {
+    try {
+        const id = sessionStorage.getItem("currenUserId")
+        const putData = getDataFromFormSignIn();
+        if (putData) {
+            const responsePut = await fetch(`api/Users/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(putData)
+            });
+            if (!responsePut.status==400) 
+                alert("weak password")
+            if (!responsePut.ok)
+                throw new Error(`http error ${responsePut.status}`)
+            alert("Update succeessfully")
+            window.location.href = "Home.html"
+        }
+    }
+    catch (err) {
+        console.log(err)
+    }
+
+}
+const fillfields = (user) =>{
+    document.getElementById("userName").value = user.userName;
+    document.getElementById("password").value = user.password;
+    document.getElementById("firstName").value = user.firstName;
+    document.getElementById("lastName").value = user.lastName;
+}
+
+const OnUpdateLoad = async () => {
+    const user = await GetUserById();
+    if (user)
+        fillfields(user);
+    checkPassword()
+}
+
+const GetUserById = async () => {
+    try {
+        const id = sessionStorage.getItem("currenUserId")
+        if (id) {
+            const responsePost = await fetch(`api/Users/${id}`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            });
+            if (!responsePost.ok) {
+                //alert("bad requset")
+                throw new Error(`http error ${responsePost.status}`)
+                //return
+            }
+            const data = await responsePost.json();
+            console.log(data); // שמירת התגובה במשתנה והדפסתה
+            return data;
+        }
+    }
+    catch (err) {
+    alert(err)
+}
 }
 

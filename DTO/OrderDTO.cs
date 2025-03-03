@@ -10,4 +10,3 @@ namespace DTO
     public record GetOrderItemDTO(int ProductId, int? Quantity);
 }
 
-//חסר בלוגיקה של הזמנה סכום ותאריך

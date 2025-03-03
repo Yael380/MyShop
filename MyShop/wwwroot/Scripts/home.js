@@ -104,20 +104,12 @@ const getElementToFilter=()=>{
 }
 
 const addToCart = (product) => {
-    sessionStorage.setItem('currenUserId', 2);
-    const user = sessionStorage.getItem('currenUserId')
-    if (!user) {
-        const result = confirm("אינך מחובר, האם תרצה להתחבר?");
-        if (result)
-            window.location.href = "login.html";
-    }
-    else {
-        cart = GetCart()
-        cart.push(product);
-        sessionStorage.setItem('cart', JSON.stringify(cart));
-        document.querySelector("#ItemsCountText").innerHTML = cart.length;
-        //alert('המוצר נוסף בהצלחה');
-    }
+      cart = GetCart()
+      cart.push(product);
+      sessionStorage.setItem('cart', JSON.stringify(cart));
+      document.querySelector("#ItemsCountText").innerHTML = cart.length;
+      //alert('המוצר נוסף בהצלחה');
+    
 }
 const GetCart = () => {
     let cart = sessionStorage.getItem('cart')
@@ -125,3 +117,15 @@ const GetCart = () => {
     return cart;
 }
 // minPrice, maxPrice, categoryIds, desc 
+const TrackLinkID = () => {
+    const user = sessionStorage.getItem('currenUserId')
+    if (!user) {
+        const result = confirm("אינך מחובר, האם תרצה להתחבר?");
+        if (result)
+            window.location.href = "login.html";
+    }
+    else {
+        window.location.href = " updateUser.html";
+    }
+
+}

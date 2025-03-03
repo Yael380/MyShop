@@ -3,12 +3,13 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Entities;
 using Microsoft.EntityFrameworkCore;
-namespace Resources
+using Repository;
+namespace Repository
 {
-    public class UserResources : IUserResources
+    public class UserRepository : IUserRepository
     {
         ApiManageContext context;
-        public UserResources(ApiManageContext apiManageContext)
+        public UserRepository(ApiManageContext apiManageContext)
         {
             context = apiManageContext;
         }

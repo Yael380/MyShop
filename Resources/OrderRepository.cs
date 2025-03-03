@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Resources
+namespace Repository
 {
     public class OrderRepository : IOrderRepository
     {
@@ -28,4 +28,5 @@ namespace Resources
         }
 
     }
+
 }

@@ -25,7 +25,7 @@ namespace MyShop.Controllers
         }
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetUserDTO>> Get(int id)
+        public async Task<ActionResult<GetUserDTO>> Get( int id)
         {
             User user = await UserServices.Get(id);
             GetUserDTO userDTO = mapper.Map<User, GetUserDTO>(user);
@@ -41,17 +41,20 @@ namespace MyShop.Controllers
         {
             User userDTO = mapper.Map<PostUserDTO,User>(user);
             User newUser =await UserServices.Post(userDTO);
+            if (newUser == null)
+            {
+                return BadRequest();
+            }
             GetUserDTO getUserDTO = mapper.Map<User, GetUserDTO>(newUser);
             return CreatedAtAction(nameof(Get), new { id = getUserDTO.Id }, getUserDTO);
         }
         // POST api/<UsersController>
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult<User>> PostLogIn([FromQuery] string userName,string password)
+        public async Task<ActionResult<GetUserDTO>> PostLogIn([FromQuery] string userName,string password)
         {
             User newUser = await UserServices.PostLogIn(userName, password);
             GetUserDTO userDTO = mapper.Map<User, GetUserDTO>(newUser);
-            logger.LogInformation($"Login attempted withUser Name {userName} and password {password}");
             if (userDTO != null) {
                 return Ok(userDTO);
             }
@@ -61,11 +64,16 @@ namespace MyShop.Controllers
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<User>> Put(int id, [FromBody] User userInfo)
+        public async Task<ActionResult<User>> Put(int id, [FromBody] PostUserDTO userInfo)
         {
-
-            User user =await UserServices.Put(id, userInfo);
-            GetUserDTO userDTO = mapper.Map<User, GetUserDTO>(user);
+            User user = mapper.Map<PostUserDTO, User>(userInfo);
+            user.Id = id;
+            User userUpdate =await UserServices.Put(id, user);
+            if (userUpdate == null)
+            {
+                return BadRequest();
+            }
+            GetUserDTO userDTO = mapper.Map<User, GetUserDTO>(userUpdate);
             if (userDTO != null)
                 return Ok(userDTO);
             else

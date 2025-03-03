@@ -1,9 +1,9 @@
 ﻿//using MyShop;
 using Entities;
 
-namespace Resources
+namespace Repository
 {
-    public interface IUserResources
+    public interface IUserRepository
     {
         Task<User> Get(int id);
         Task<User> Post(User user);

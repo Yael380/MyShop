@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Resources
+namespace Repository
 {
     public class RatingRepository : IRatingRepository
     {

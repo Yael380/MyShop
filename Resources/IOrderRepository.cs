@@ -1,6 +1,6 @@
 ﻿using Entities;
 
-namespace Resources
+namespace Repository
 {
     public interface IOrderRepository
     {

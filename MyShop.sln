@@ -5,7 +5,7 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyShop", "MyShop\MyShop.csproj", "{B452A0C2-0535-4947-BA62-CB0E5268D054}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resources", "Resources\Resources.csproj", "{C31C0845-54E9-4F98-A137-AF4E525FC00D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Resources\Repository.csproj", "{C31C0845-54E9-4F98-A137-AF4E525FC00D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{E98E61AF-B2E8-4F18-85C0-8FAD52B10D04}"
 EndProject
@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entiti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTO", "DTO\DTO.csproj", "{8F3F3045-F07E-4595-86B2-FFD6FB9FD9E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserRepositoryUnitTesting", "UserRepositoryUnitTesting\UserRepositoryUnitTesting.csproj", "{E501DE45-936C-4507-8613-3C0A3A8086A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserRepositoryUnitTesting", "UserRepositoryUnitTesting\UserRepositoryUnitTesting.csproj", "{E501DE45-936C-4507-8613-3C0A3A8086A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

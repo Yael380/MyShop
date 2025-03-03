@@ -44,30 +44,38 @@ const totalAmount = (products) => {
     return products.reduce((prev, curr) => prev + curr.price, value);
 }
 const placeOrder = async () => {
-    try {
-        const postData = getDataOrder();
-        if (postData) {
-            const responsePost = await fetch('api/Orders', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(postData)
-            });
-            if (!responsePost.ok) {
-                //alert("bad requset")
-                throw new Error(`http error ${responsePost.status}`)
-                //return
+    const user = sessionStorage.getItem('currenUserId')
+    if (!user) {
+        const result = confirm("אינך מחובר, האם תרצה להתחבר?");
+        if (result)
+            window.location.href = "login.html";
+    }
+    else {
+        try {
+            const postData = getDataOrder();
+            if (postData) {
+                const responsePost = await fetch('api/Orders', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(postData)
+                });
+                if (!responsePost.ok) {
+                    //alert("bad requset")
+                    throw new Error(`http error ${responsePost.status}`)
+                    //return
+                }
+                const dataPost = await responsePost.json();
+                console.log('POST Data:', dataPost);
+                alert(`Your order ${dataPost.id} is sucssesfully`)
             }
-            const dataPost = await responsePost.json();
-            console.log('POST Data:', dataPost);
-            alert(`Your order ${dataPost.id} is sucssesfully`)
         }
+        catch (err) {
+            alert(err)
+        }
+        sessionStorage.removeItem('cart');
+        LoadCart();
+        document.location.href = "/home.html";
     }
-    catch (err) {
-        alert(err)
-    }
-    sessionStorage.removeItem('cart');
-    LoadCart();
-    document.location.href = "/home.html";
 }
 const getDataOrder = () => {
     const userId = sessionStorage.getItem('currenUserId')
@@ -87,9 +95,3 @@ const getDataOrder = () => {
     //sum = 40;
     return { UserId:userId, OrderItems: orderItems,Sum:sum }
 }
-//<tr class="item-row">
-//    <td class="imageColumn"><a rel="lightbox" href="#"><div class="image"></div></a></td>
-//    <td class="descriptionColumn"><div><h3 class="itemName"></h3><h6><p class="itemNumber"></p><a class="viewLink" href="https://www.next.co.il/he/g59522s11#407223">לפרטים נוספים</a></h6></div></td>
-//    <td class="availabilityColumn"><div>במלאי</div></td>
-//    <td class="totalColumn delete"><div class="expandoHeight" style="height: 99px;"><p class="price"></p><a href="#" title="לחצו כאן כדי להסיר את פריט זה" class="Hide DeleteButton showText">הסרת פריט</a></div></td>
-//</tr>

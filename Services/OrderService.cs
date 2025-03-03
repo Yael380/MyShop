@@ -1,6 +1,6 @@
 ﻿using Entities;
 using Microsoft.Extensions.Logging;
-using Resources;
+using Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +40,8 @@ namespace Services
                 newOrder.Sum = sum;
                 logger.LogCritical($"User id {newOrder.UserId} is trying to hack your order amount ");
             }
-          
+            DateOnly dateNow = DateOnly.FromDateTime(DateTime.Now);
+            newOrder.Date = dateNow;
             return await orderRepository.Post(newOrder);
         }
     }
