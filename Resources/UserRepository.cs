@@ -21,8 +21,8 @@ namespace Repository
         {
             var res = await context.Users.AddAsync(user);
             await context.SaveChangesAsync();
-            return user;
-            //return res;
+            //return user;
+            return res.Entity;
         }
         public async Task<User> PostLogIn(string userName, string password)
         {

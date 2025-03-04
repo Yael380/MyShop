@@ -9,21 +9,22 @@ const GetCart = ()=> {
 }
 const LoadCart = () => { 
     const products = GetCart();
+    CartDesign(products);
+    document.querySelector("#itemCount").innerText = products.length;
+    document.querySelector("#totalAmount").innerText = totalAmount(products);
+}
+const CartDesign = (products) => {
     let tmp = document.getElementById("temp-row");
-    document.querySelector("tbody").innerText=''
+    document.querySelector("tbody").innerText = ''
     products.forEach(product => {
         let cloneProduct = tmp.content.cloneNode(true);
         cloneProduct.querySelector('.image').style.backgroundImage = `url(Images/${product.image})`
         cloneProduct.querySelector(".itemName").innerText = product.name;
-        //cloneProduct.querySelector(".availabilityColumn").innerText = true;
-        cloneProduct.querySelector(".price").innerText = product.price;
+        cloneProduct.querySelector(".availabilityColumn").innerText = true;
+        cloneProduct.querySelector(".price").innerText = `${product.price}$`;
         cloneProduct.querySelector(".showText").addEventListener('click', () => { removeProduct(product) })
         document.querySelector("tbody").appendChild(cloneProduct)
     })
-    document.querySelector("#itemCount").innerText = products.length;
-    document.querySelector("#totalAmount").innerText = totalAmount(products);
-
-
 }
 const removeProduct = (product) => {
     let cart = GetCart();
@@ -68,6 +69,9 @@ const placeOrder = async () => {
                 console.log('POST Data:', dataPost);
                 alert(`Your order ${dataPost.id} is sucssesfully`)
             }
+            else {
+                alert("You don't have nothing in your cart")
+            }
         }
         catch (err) {
             alert(err)
@@ -81,6 +85,8 @@ const getDataOrder = () => {
     const userId = sessionStorage.getItem('currenUserId')
     console.log(userId)
     const cart = GetCart();
+    if (cart.length == 0)
+        return null;
     let orderItems = [];
     let sum = 0;
     for (let i = 0; i < cart.length; i++) {

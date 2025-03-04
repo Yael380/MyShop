@@ -78,13 +78,13 @@ public partial class ApiManageContext : DbContext
 
             entity.Property(e => e.CategoryId).HasColumnName("Category_Id");
             entity.Property(e => e.Description)
-                .HasMaxLength(30)
+                .HasMaxLength(80)
                 .IsFixedLength();
             entity.Property(e => e.Image)
-                .HasMaxLength(40)
+                .HasMaxLength(80)
                 .IsFixedLength();
             entity.Property(e => e.Name)
-                .HasMaxLength(20)
+                .HasMaxLength(80)
                 .IsFixedLength();
 
             entity.HasOne(d => d.Category).WithMany(p => p.Products)

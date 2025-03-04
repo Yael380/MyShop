@@ -1,7 +1,7 @@
 ﻿let passwordScore=0;
 const toSignIn = () => {
-    const signIn = document.querySelector(".signIn");
-    signIn.classList.remove("signIn")
+    document.getElementById('login_div').style.display = 'none'
+    document.querySelector('.signIn_div').style.display = 'block';
 }
 
 const getDataFromFormSignIn = () => {   
@@ -13,8 +13,8 @@ const getDataFromFormSignIn = () => {
         alert("email is worng")
     else if (passwordScore < 3) 
         alert("weak password")
-    else if (firstName.length < 2 || firstName.length > 20 || lastName.length < 2 || lastName.length > 20)
-        alert("Name can be between 2 till 20 letters")
+    else if (firstName.length < 2 || firstName.length > 50 || lastName.length < 2 || lastName.length > 50)
+        alert("Name can be between 2 till 50 letters")
     else if (!userName || !password || !firstName || !lastName)
         alert("All field are required")
     else 
@@ -38,6 +38,8 @@ const signIn = async () => {
             const dataPost = await responsePost.json();
             console.log('POST Data:', dataPost);
             alert("SignIn succeessfully")
+            document.getElementById('login_div').style.display = 'block'
+            document.querySelector('.signIn_div').style.display = 'none';
         }
     }
     catch (err) {
@@ -133,7 +135,7 @@ const update = async () => {
 }
 const fillfields = (user) =>{
     document.getElementById("userName").value = user.userName;
-    document.getElementById("password").value = user.password;
+    //document.getElementById("password").value = '';
     document.getElementById("firstName").value = user.firstName;
     document.getElementById("lastName").value = user.lastName;
 }

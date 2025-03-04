@@ -29,7 +29,14 @@ namespace Services
         public async  Task<Order> Post(Order newOrder)
         {
             List<Product> products = await productRepository.Get(null,null,new int?[0],null);
-            double ? sum = 0;
+            checkSum(products, newOrder);
+            DateOnly dateNow = DateOnly.FromDateTime(DateTime.Now);
+            newOrder.Date = dateNow;
+            return await orderRepository.Post(newOrder);
+        }
+        private void checkSum(List<Product> products, Order newOrder)
+        {
+            double? sum = 0;
             foreach (var item in newOrder.OrderItems)
             {
                 Product? p = products.FirstOrDefault(p => p.Id == item.ProductId);
@@ -40,9 +47,6 @@ namespace Services
                 newOrder.Sum = sum;
                 logger.LogCritical($"User id {newOrder.UserId} is trying to hack your order amount ");
             }
-            DateOnly dateNow = DateOnly.FromDateTime(DateTime.Now);
-            newOrder.Date = dateNow;
-            return await orderRepository.Post(newOrder);
         }
     }
 }

@@ -56,6 +56,7 @@ namespace MyShop.Controllers
             User newUser = await UserServices.PostLogIn(userName, password);
             GetUserDTO userDTO = mapper.Map<User, GetUserDTO>(newUser);
             if (userDTO != null) {
+                logger.LogInformation($"User {userDTO.Id} logged in");
                 return Ok(userDTO);
             }
             else

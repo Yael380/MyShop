@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entiti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTO", "DTO\DTO.csproj", "{8F3F3045-F07E-4595-86B2-FFD6FB9FD9E5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserRepositoryUnitTesting", "UserRepositoryUnitTesting\UserRepositoryUnitTesting.csproj", "{E501DE45-936C-4507-8613-3C0A3A8086A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject", "UserRepositoryUnitTesting\TestProject.csproj", "{E501DE45-936C-4507-8613-3C0A3A8086A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

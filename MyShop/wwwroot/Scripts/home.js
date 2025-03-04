@@ -4,12 +4,11 @@ const OnLoad = () => {
     LoadProducts();
     LoadCategories();
 }
-
-const GetProducts = async () => {
+const urlForProduct = () => {
     let url = "api/Products/";
     const { nameSearch, minPrice, maxPrice } = getElementToFilter();
     if (nameSearch || minPrice || maxPrice || categoryIds.length > 0)
-        url +='?';
+        url += '?';
     if (nameSearch)
         url += `&desc=${nameSearch}`;
     if (minPrice)
@@ -18,6 +17,10 @@ const GetProducts = async () => {
         url += `&maxPrice=${maxPrice}`;
     for (let i = 0; i < categoryIds.length; i++)
         url += `&categoryIds=${categoryIds[i]}`;
+    return url;
+}
+const GetProducts = async () => {
+    let url = urlForProduct();
     try {
         const responseGet = await fetch( url, {
             method: 'GET',
@@ -38,20 +41,23 @@ const GetProducts = async () => {
 
 const LoadProducts = async () => {
     const products = await GetProducts();
+    ProductDesign(products);
+    const cart = GetCart();
+    document.querySelector("#ItemsCountText").innerHTML = cart.length;
+    document.querySelector("#counter").innerHTML =products.length ;
+}
+const ProductDesign = (products) => {
     let tmp = document.getElementById("temp-card");
     document.getElementById("PoductList").innerHTML = '';
     products.forEach(product => {
         let cloneProduct = tmp.content.cloneNode(true);
         cloneProduct.querySelector("img").src = `./Images/${product.image}`
         cloneProduct.querySelector("h1").textContent = product.name;
-        cloneProduct.querySelector(".price").innerText = product.price;
+        cloneProduct.querySelector(".price").innerText = `${product.price}$`;
         cloneProduct.querySelector(".description").innerText = product.description;
         cloneProduct.querySelector("button").addEventListener('click', () => { addToCart(product) })
         document.getElementById("PoductList").appendChild(cloneProduct)
     })
-    const cart = GetCart();
-    document.querySelector("#ItemsCountText").innerHTML = cart.length;
-    document.querySelector("#counter").innerHTML =products.length ;
 }
 const GetCategories = async () => {
     try {
@@ -74,6 +80,9 @@ const GetCategories = async () => {
 const LoadCategories = async () => {
     const categories = await GetCategories();
     console.log(categories);
+    CategoryDesign(categories);
+}
+const CategoryDesign = (categories) => {
     let tmp = document.getElementById("temp-category");
     categories.forEach(category => {
         let cloneCategory = tmp.content.cloneNode(true);
